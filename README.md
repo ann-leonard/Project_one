@@ -1,1 +1,2 @@
-# Project_one
+# First group project repo
+
