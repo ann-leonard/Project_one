@@ -1,8 +1,10 @@
 #firstDiv {
     
     background-image: url(../images/Homepgbackgroundimg.jpg);
-    height:600px;
+    height:500px;
     background-size: cover;
+   margin-left:-45px;
+   margin-right:-45px;
 }
 
 .modal {
