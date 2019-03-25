@@ -4,3 +4,9 @@
     height:600px;
     background-size: cover;
 }
+
+.modal {
+    width: 25%;
+    margin-right: 0px;
+    margin-left: auto;
+}
