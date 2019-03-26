@@ -1,14 +1,35 @@
-#firstDiv {
+/* #firstDiv {
     
     background-image: url(../images/Homepgbackgroundimg.jpg);
     height:500px;
     background-size: cover;
-   margin-left:-45px;
-   margin-right:-45px;
-}
+   /* margin-left:-45px;
+   margin-right:-45px; */
+   
+   .firstImg {
+   max-height:800px;
+   /* background-image: url(../Images/cookingimage.jpg); */
+   background-repeat: no-repeat;
+   background-size:cover;
+   width: 100vw;
+   }
 
 .modal {
     width: 25%;
     margin-right: 0px;
     margin-left: auto;
+}
+#tester{
+    height: 400px;
+}
+
+#startCookingBtn, #findRecipeBtn {
+    border-radius: 25px;
+    
+}
+
+#btnDiv1, #btnDiv2 {
+    
+    position: relative;
+    margin-bottom: 20px;
 }
