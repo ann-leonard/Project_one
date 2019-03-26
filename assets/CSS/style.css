@@ -7,29 +7,37 @@
    margin-right:-45px; */
    
    .firstImg {
-   max-height:800px;
+   max-height:750px;
    /* background-image: url(../Images/cookingimage.jpg); */
    background-repeat: no-repeat;
    background-size:cover;
    width: 100vw;
+   border-bottom: 10px solid #ffc866;
    }
 
-.modal {
-    width: 25%;
-    margin-right: 0px;
-    margin-left: auto;
-}
-#tester{
-    height: 400px;
-}
+
+
 
 #startCookingBtn, #findRecipeBtn {
-    border-radius: 25px;
-    
-}
+    border-radius: 35px;
+    width: 190px;
+    height: 70px; 
+    padding-top:14px;
+    font-size:26px;
+    color: #f9b443;
+    font-weight: 400;
+    }
 
 #btnDiv1, #btnDiv2 {
-    
-    position: relative;
-    margin-bottom: 20px;
+   
+    margin-top: -150px;
+}
+
+@media screen and (max-width: 575px) {
+    #btnDiv1 {
+        margin-top: -80px;
+    }
+}
+#footerHome {
+    height: 100px;
 }
