@@ -59,3 +59,6 @@
 .submit {
     text-decoration: inherit;
 }
+
+button:focus {
+    outline:0;}
