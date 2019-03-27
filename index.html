@@ -31,30 +31,36 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-light bg-warning justify-content-between">
-        <a class="navbar-brand">sousChef</a>
-        <form class="form-inline">
 
-            <button class="btn btn-outline-success my-4 my-sm-0 modal-trigger" type="submit"
-                data-target="modal-login">Sign in</button>
-            <button class="btn btn-outline-success my-4 my-sm-0 modal-trigger" type="submit"
-                data-target="modal-signup">Sign up</button>
-            <button class="btn btn-outline-success my-4 my-sm-0" type="submit" id="logout-button">Log Out</button>
-        </form>
+    <nav id="maincolor" class="navbar">
+        <a class="navbar-brand" href="#">
+            <img class="logoimage ml-0" src=assets/Images/SousChef(templogo).png alt="logo"></a>
+        <div class="row mr-1">
+
+            <form class="form-inline">
+
+                <button class="btn btn-outline-success my-4 my-sm-0 modal-trigger" type="submit"
+                    data-target="modal-login">Sign in</button>
+                <button class="btn btn-outline-success my-4 my-sm-0 modal-trigger" type="submit"
+                    data-target="modal-signup">Sign up</button>
+                <button class="btn btn-outline-success my-4 my-sm-0" type="submit" id="logout-button">Log Out</button>
+            </form>
+        </div>
     </nav>
 
-   
+
+
 
     <img src="assets/images/Homepgbackgroundimg.jpg" class="firstImg" />
 
 
     <div class="row">
-        
+
         <div id="btnDiv1" class="col-sm-7 text-center">
             <a id="startCookingBtn" href="#" class="justify-content-end btn bg-white  btn-lg">Start Cooking</a>
         </div>
         <div id="btnDiv2" class="col-sm-5">
-            <a id="findRecipeBtn" href="#" class="btn bg-white  btn-lg">Find Recipe</a>
+            <a id="findRecipeBtn" href="userAccount.html" class="btn bg-white  btn-lg">Find Recipe</a>
         </div>
     </div>
 
@@ -67,12 +73,12 @@
     <div id="secondC" class="card">
         <h5 class="card-header bg-white">Favorite Recipes</h5>
         <div class="card-body">
-            
-            
+
+
         </div>
         <div id="footerHome" class="position-static bg-secondary"></div>
     </div>
-    
+
     <!-- </div> -->
 
 
@@ -81,7 +87,7 @@
 
     <!-- Adding modals for sign up/sign in -->
     <div id="modal-signup" class="modal">
-        <div class="modal-content">
+        <div class="modal-content col-md-6 mt-3">
             <h4>Sign Up</h4><br />
             <form id="signup-form">
                 <div class="input-field">
@@ -98,7 +104,8 @@
     </div>
 
     <div id="modal-login" class="modal">
-        <div class="modal-content">
+       
+        <div class="modal-content col-md-6 mt-3">
             <h4>Login</h4><br />
             <form id="login-form">
                 <div class="input-field">
