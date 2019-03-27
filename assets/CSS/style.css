@@ -1,11 +1,7 @@
-/* #firstDiv {
-    
-    background-image: url(../images/Homepgbackgroundimg.jpg);
-    height:500px;
-    background-size: cover;
-   /* margin-left:-45px;
-   margin-right:-45px; */
+
    
+
+
    .firstImg {
    max-height:750px;
    /* background-image: url(../Images/cookingimage.jpg); */
@@ -13,6 +9,10 @@
    background-size:cover;
    width: 100vw;
    border-bottom: 10px solid #ffc866;
+   }
+
+   h5 {
+       color:#ffc866;
    }
 
    #maincolor {
@@ -41,6 +41,16 @@
     margin-top: -150px;
 }
 
+#secondC {
+    
+    overflow: scroll;
+    white-space: nowrap;
+}
+
+.img {
+    margin: 10px;
+}
+
 @media screen and (max-width: 575px) {
     #btnDiv1 {
         margin-top: -80px;
@@ -50,3 +60,6 @@
 #footerHome {
     height: 100px;
 }
+
+
+
