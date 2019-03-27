@@ -17,17 +17,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
-    <script type="text/javascript" src="assets/javascript/logic.js"></script>
-    <script type="text/javascript" src="assets/javascript/data.js"></script>
 
     <!-- Firebase Links -->
-    <!-- <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script> -->
-    <!-- <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script> -->
+    <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-firestore.js"></script>
+
+    <script type="text/javascript" src="assets/javascript/logic.js"></script>
+    <script type="text/javascript" src="assets/javascript/data.js"></script>
 </head>
 
 <body>
@@ -39,11 +40,11 @@
 
             <form class="form-inline">
 
-                <button class="btn btn-outline-success my-4 my-sm-0 modal-trigger" type="submit"
+                <button class="btn btn-outline-success my-4 my-sm-0 modal-trigger logged-out" type="submit"
                     data-target="modal-login">Sign in</button>
-                <button class="btn btn-outline-success my-4 my-sm-0 modal-trigger" type="submit"
-                    data-target="modal-signup">Sign up</button>
-                <button class="btn btn-outline-success my-4 my-sm-0" type="submit" id="logout-button">Log Out</button>
+                <button class="btn btn-outline-success my-4 my-sm-0 logged-out" type="submit"
+                    data-target="modal-signup" id="signup-button">Sign up</button>
+                <button class="btn btn-outline-success my-4 my-sm-0 logged-in" type="submit" id="logout-button">Log Out</button>
             </form>
         </div>
     </nav>
@@ -86,7 +87,7 @@
 
 
     <!-- Adding modals for sign up/sign in -->
-    <div id="modal-signup" class="modal">
+    <!-- <div id="modal-signup" class="modal">
         <div class="modal-content col-md-6 mt-3">
             <h4>Sign Up</h4><br />
             <form id="signup-form">
@@ -101,7 +102,7 @@
                 <button class="btn yellow darken-2 z-depth-0" id="signup-button">Sign Up</button>
             </form>
         </div>
-    </div>
+    </div> -->
 
     <div id="modal-login" class="modal">
        

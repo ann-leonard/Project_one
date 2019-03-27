@@ -1,211 +1,133 @@
-// Firebase Authentication //
-//setup guides
-var setupGuides = (data) => {
-
-<<<<<<< HEAD
-    let html = "";
-    data.forEach(doc => {
-         const guide = doc.data();
-         console.log(guide);
-         const li =  $("<li>");
-         var div1 = $("<div>");
-         var div2 = $("<div>");
-         div1.addClass("collapsible-header grey lighten-4");
-         div1.text($(guide.title));
-         div2.addClass("collapsible-body white");
-         div2.text($(guide.content));
-         li.append(div1);
-         li.append(div2);
-  
-        console.log(li);
-  
-        html += li
-         
-        guideList.append(li);
-    });
-    
-  }
-  
-  
-  
-  
-  $("DOMContentLoaded", function () {
-    var modals = $(".modal");
-    M.Modal.init(modals);
-  
+$(document).ready(function () {
     var config = {
-      apiKey: "AIzaSyAxtAWMHjPjjEdZ1gVoGVeSF8i-mdEN9IE",
-      authDomain: "project-one-74297.firebaseapp.com",
-      databaseURL: "https://project-one-74297.firebaseio.com",
-      projectId: "project-one-74297",
-      storageBucket: "project-one-74297.appspot.com",
-      messagingSenderId: "1057793714147"
+        apiKey: "AIzaSyAxtAWMHjPjjEdZ1gVoGVeSF8i-mdEN9IE",
+        authDomain: "project-one-74297.firebaseapp.com",
+        databaseURL: "https://project-one-74297.firebaseio.com",
+        projectId: "project-one-74297",
+        storageBucket: "project-one-74297.appspot.com",
+        messagingSenderId: "1057793714147"
     };
     firebase.initializeApp(config);
-  
+
     var auth = firebase.auth();
     var db = firebase.firestore();
-  
-  
-    //get data
-    db.collection("train").get().then(snapshot => {
-        setupGuides(snapshot.docs)
-    })
-  
-    auth.onAuthStateChanged(user => {
+
+    //hides & shows log in & log buttons depending on if user is logged in or out
+    const setupUI = (user) => {
         if (user) {
-            console.log("user logged in: ", user.email);
+            db.collection("users").doc(user.uid).get().then(doc => {
+                $("#account-email").append(user.email);
+            })
+
+            $(".logged-in").show();
+            $(".logged-out").hide();
         } else {
-            console.log("user logged out");
+            $(".logged-in").hide();
+            $(".logged-out").show();
         }
-    });
-  
-    var signupForm = $("#signup-form");
-    $("#signup-button").on("click", (e) => {
-        e.preventDefault();
-  
-        var email = $("#signup-email").val()
-        var password = $("#signup-password").val();
-  
-        console.log(email);
-        console.log(password);
-  
-        auth.createUserWithEmailAndPassword(email, password).then(cred => {
-            console.log(cred.user);
-            var modal = $("#modal-signup");
-            M.Modal.getInstance(modal).close();
+    }
+
+    //setup guides from firebase, pulling information
+    var setupGuides = (data) => {
+
+        if (data.length) {
+            data.forEach(doc => {
+                const guide = doc.data();
+                console.log(guide);
+            });
+        } else {
+            $("#connect").empty();
+            $("#connect").append("login to review guides")
+        }
+    }
+
+
+
+    $("DOMContentLoaded", function () {
+        var modals = $(".modal");
+        //initialize the modals
+        M.Modal.init(modals);
+
+        //checking to see if the user is logged in or not then displaying guides if they are
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                db.collection("users").onSnapshot(snapshot => {
+                    setupGuides(snapshot.docs)
+                    setupUI(user);
+                })
+            } else {
+                setupUI()
+                setupGuides([]);
+            }
         });
-    });
-  
-    // logout 
-    $("#logout-button").on("click", (e) => {
-        e.preventDefault();
-        firebase.auth().signOut().then(() => {
-            console.log("user signed out");
+
+        //creating a user
+        $("#signup-button").on("click", (e) => {
+            function registrationPage() {
+                window.open("Registration.html")
+            }
+
+            registrationPage();
+        }); 
+
+        $("#submitBtn").on("click", (e) => {
+            e.preventDefault();
+
+            var email = $("#signup-email").val()
+            var password = $("#signup-password").val();
+
+            console.log(email);
+            console.log(password);
+
+            auth.createUserWithEmailAndPassword(email, password).then(cred => {
+                return db.collection("users").doc(cred.user.uid).set({
+                    name: $("#name").val(), 
+                    age: $("#age").val()
+                });
+            });
+
+            function userAccount() {
+                open("userAccount.html")
+            }
+
+            userAccount();
         });
+            
+        
+
+        // logout
+        $("#logout-button").on("click", (e) => {
+            e.preventDefault();
+            firebase.auth().signOut().then(() => {
+                console.log("user signed out");
+            });
+        });
+
+        // login
+        var loginForm = $("#login-form");
+        $("#button-login").on("click", (e) => {
+            e.preventDefault();
+
+            //get user info
+            var email = $("#login-email").val();
+            var password = $("#login-password").val();
+
+            auth.signInWithEmailAndPassword(email, password).then(cred => {
+                console.log(cred.user);
+
+                //close the login modal and reset the form
+                var modal = $("#modal-login");
+                M.Modal.getInstance(modal).close();
+                // loginForm.reset();
+                
+                function myFunction() {
+                    window.open("userAccount.html");
+                }
+
+                myFunction()
+            });
+        });
+
     });
-  
-    // login
-    var loginForm = $("#login-form");
-    $("#button-login").on("click", (e) => {
-        e.preventDefault();
-  
-        //get user info
-        var email = $("#login-email").val();
-        var password = $("#login-password").val();
-  
-        auth.signInWithEmailAndPassword(email, password).then(cred => {
-            console.log(cred.user);
-  
-            //close the login modal and reset the form
-            var modal = $("#modal-login");
-            M.Modal.getInstance(modal).close();
-            // loginForm.reset();
-        })
-    })
-  
-  });
-=======
-  let html = "";
-  data.forEach(doc => {
-       const guide = doc.data();
-       console.log(guide);
-       const li =  $("<li>");
-       var div1 = $("<div>");
-       var div2 = $("<div>");
-       div1.addClass("collapsible-header grey lighten-4");
-       div1.text($(guide.title));
-       div2.addClass("collapsible-body white");
-       div2.text($(guide.content));
-       li.append(div1);
-       li.append(div2);
-
-      console.log(li);
-
-      html += li
-       
-      guideList.append(li);
-  });
-  
-}
-
-
-
-
-$("DOMContentLoaded", function () {
-  var modals = $(".modal");
-  M.Modal.init(modals);
-
-  var config = {
-    apiKey: "AIzaSyAxtAWMHjPjjEdZ1gVoGVeSF8i-mdEN9IE",
-    authDomain: "project-one-74297.firebaseapp.com",
-    databaseURL: "https://project-one-74297.firebaseio.com",
-    projectId: "project-one-74297",
-    storageBucket: "project-one-74297.appspot.com",
-    messagingSenderId: "1057793714147"
-  };
-  firebase.initializeApp(config);
-
-  var auth = firebase.auth();
-  var db = firebase.firestore();
-
-
-  //get data
-  db.collection("train").get().then(snapshot => {
-      setupGuides(snapshot.docs)
-  })
-
-  auth.onAuthStateChanged(user => {
-      if (user) {
-          console.log("user logged in: ", user.email);
-      } else {
-          console.log("user logged out");
-      }
-  });
-
-  var signupForm = $("#signup-form");
-  $("#signup-button").on("click", (e) => {
-      e.preventDefault();
-
-      var email = $("#signup-email").val()
-      var password = $("#signup-password").val();
-
-      console.log(email);
-      console.log(password);
-
-      auth.createUserWithEmailAndPassword(email, password).then(cred => {
-          console.log(cred.user);
-          var modal = $("#modal-signup");
-          M.Modal.getInstance(modal).close();
-      });
-  });
-
-  // logout 
-  $("#logout-button").on("click", (e) => {
-      e.preventDefault();
-      firebase.auth().signOut().then(() => {
-          console.log("user signed out");
-      });
-  });
-
-  // login
-  var loginForm = $("#login-form");
-  $("#button-login").on("click", (e) => {
-      e.preventDefault();
-
-      //get user info
-      var email = $("#login-email").val();
-      var password = $("#login-password").val();
-
-      auth.signInWithEmailAndPassword(email, password).then(cred => {
-          console.log(cred.user);
-
-          //close the login modal and reset the form
-          var modal = $("#modal-login");
-          M.Modal.getInstance(modal).close();
-          // loginForm.reset();
-      })
-  })
 
 });
->>>>>>> b9e70c3418db3a8f425530514543e22b7551b0ba
