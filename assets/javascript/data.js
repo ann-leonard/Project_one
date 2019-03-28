@@ -1,106 +1,133 @@
-// Firebase Authentication //
-//setup guides
-var setupGuides = (data) => {
+$(document).ready(function () {
+    var config = {
+        apiKey: "AIzaSyAxtAWMHjPjjEdZ1gVoGVeSF8i-mdEN9IE",
+        authDomain: "project-one-74297.firebaseapp.com",
+        databaseURL: "https://project-one-74297.firebaseio.com",
+        projectId: "project-one-74297",
+        storageBucket: "project-one-74297.appspot.com",
+        messagingSenderId: "1057793714147"
+    };
+    firebase.initializeApp(config);
 
-  let html = "";
-  data.forEach(doc => {
-       const guide = doc.data();
-       console.log(guide);
-       const li =  $("<li>");
-       var div1 = $("<div>");
-       var div2 = $("<div>");
-       div1.addClass("collapsible-header grey lighten-4");
-       div1.text($(guide.title));
-       div2.addClass("collapsible-body white");
-       div2.text($(guide.content));
-       li.append(div1);
-       li.append(div2);
+    var auth = firebase.auth();
+    var db = firebase.firestore();
 
-      console.log(li);
+    //hides & shows log in & log buttons depending on if user is logged in or out
+    const setupUI = (user) => {
+        if (user) {
+            db.collection("users").doc(user.uid).get().then(doc => {
+                $("#account-email").append(user.email);
+            })
 
-      html += li
-       
-      guideList.append(li);
-  });
-  
-}
+            $(".logged-in").show();
+            $(".logged-out").hide();
+        } else {
+            $(".logged-in").hide();
+            $(".logged-out").show();
+        }
+    }
 
+    //setup guides from firebase, pulling information
+    var setupGuides = (data) => {
 
-
-
-$("DOMContentLoaded", function () {
-  var modals = $(".modal");
-  M.Modal.init(modals);
-
-  var config = {
-    apiKey: "AIzaSyAxtAWMHjPjjEdZ1gVoGVeSF8i-mdEN9IE",
-    authDomain: "project-one-74297.firebaseapp.com",
-    databaseURL: "https://project-one-74297.firebaseio.com",
-    projectId: "project-one-74297",
-    storageBucket: "project-one-74297.appspot.com",
-    messagingSenderId: "1057793714147"
-  };
-  firebase.initializeApp(config);
-
-  var auth = firebase.auth();
-  var db = firebase.firestore();
+        if (data.length) {
+            data.forEach(doc => {
+                const guide = doc.data();
+                console.log(guide);
+            });
+        } else {
+            $("#connect").empty();
+            $("#connect").append("login to review guides")
+        }
+    }
 
 
-  //get data
-  db.collection("train").get().then(snapshot => {
-      setupGuides(snapshot.docs)
-  })
 
-  auth.onAuthStateChanged(user => {
-      if (user) {
-          console.log("user logged in: ", user.email);
-      } else {
-          console.log("user logged out");
-      }
-  });
+    $("DOMContentLoaded", function () {
+        var modals = $(".modal");
+        //initialize the modals
+        M.Modal.init(modals);
 
-  var signupForm = $("#signup-form");
-  $("#signup-button").on("click", (e) => {
-      e.preventDefault();
+        //checking to see if the user is logged in or not then displaying guides if they are
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                db.collection("users").onSnapshot(snapshot => {
+                    setupGuides(snapshot.docs)
+                    setupUI(user);
+                })
+            } else {
+                setupUI()
+                setupGuides([]);
+            }
+        });
 
-      var email = $("#signup-email").val()
-      var password = $("#signup-password").val();
+        //creating a user
+        $("#signup-button").on("click", (e) => {
+            function registrationPage() {
+                window.open("Registration.html")
+            }
 
-      console.log(email);
-      console.log(password);
+            registrationPage();
+        }); 
 
-      auth.createUserWithEmailAndPassword(email, password).then(cred => {
-          console.log(cred.user);
-          var modal = $("#modal-signup");
-          M.Modal.getInstance(modal).close();
-      });
-  });
+        $("#submitBtn").on("click", (e) => {
+            e.preventDefault();
 
-  // logout 
-  $("#logout-button").on("click", (e) => {
-      e.preventDefault();
-      firebase.auth().signOut().then(() => {
-          console.log("user signed out");
-      });
-  });
+            var email = $("#signup-email").val()
+            var password = $("#signup-password").val();
 
-  // login
-  var loginForm = $("#login-form");
-  $("#button-login").on("click", (e) => {
-      e.preventDefault();
+            console.log(email);
+            console.log(password);
 
-      //get user info
-      var email = $("#login-email").val();
-      var password = $("#login-password").val();
+            auth.createUserWithEmailAndPassword(email, password).then(cred => {
+                return db.collection("users").doc(cred.user.uid).set({
+                    name: $("#name").val(), 
+                    age: $("#age").val()
+                });
+            });
 
-      auth.signInWithEmailAndPassword(email, password).then(cred => {
-          console.log(cred.user);
+            function userAccount() {
+                open("userAccount.html")
+            }
 
-          //close the login modal and reset the form
-          var modal = $("#modal-login");
-          M.Modal.getInstance(modal).close();
-          // loginForm.reset();
-      })
-  })
+            userAccount();
+        });
+            
+        
+
+        // logout
+        $("#logout-button").on("click", (e) => {
+            e.preventDefault();
+            firebase.auth().signOut().then(() => {
+                console.log("user signed out");
+            });
+        });
+
+        // login
+        var loginForm = $("#login-form");
+        $("#button-login").on("click", (e) => {
+            e.preventDefault();
+
+            //get user info
+            var email = $("#login-email").val();
+            var password = $("#login-password").val();
+
+            auth.signInWithEmailAndPassword(email, password).then(cred => {
+                console.log(cred.user);
+
+                //close the login modal and reset the form
+                var modal = $("#modal-login");
+                M.Modal.getInstance(modal).close();
+                // loginForm.reset();
+                
+                function myFunction() {
+                    window.open("userAccount.html");
+                }
+
+                myFunction()
+            });
+        });
+
+    });
 
 });
